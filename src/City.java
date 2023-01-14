@@ -3,6 +3,7 @@ public class City {
 
     private String cityName;
     private String district;
+
     private String [] streetNameArr;
 
     public City (String cityName, String district , String [] streetName){
@@ -10,6 +11,7 @@ public class City {
         this.district = district;
         this.streetNameArr = streetName ;
     }
+
 
     public String getCityName (){
         return this.cityName;
@@ -20,7 +22,6 @@ public class City {
         return streetNameArr;
     }
 
-    //סיבוכיות O(n)
     protected static Boolean chosenStreet (City city, String typedStreet){
         boolean existsStreet = false;
         for (int i = 0; i < city.streetNameArr.length; i++) {
@@ -32,7 +33,6 @@ public class City {
         return existsStreet;
     }
 
-    //סיבוכיות O(n)
     public String toString() {
         return "City Name: " + this.cityName + "\n" +
                 "Street Name: " + Arrays.toString(this.streetNameArr) + "\n";

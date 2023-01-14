@@ -4,8 +4,8 @@ import java.util.Scanner;
 public class RealEstate {
     Scanner scanner = new Scanner(System.in);
     private static final int USERS_ARRAY_SIZE = 1000;
-    private static final int PROPERTIES_ARRAY_SIZE = 1000;
-    private static final int CITIES_ARRAY_SIZE = 100;
+    private static final int PROPERTIES_ARRAY_SIZE = 10;
+    private static final int CITIES_ARRAY_SIZE = 10;
     private static final int NUMBER_PUBLICATIONS_STANDART_USER = 2;
     private static final int NUMBER_PUBLICATIONS_AGENT_USER = 5;
     private static final String REGULAR_APARTMENT = "1";
@@ -45,6 +45,7 @@ public class RealEstate {
         cities[8] = new City("Haifa", "North", new String[]{"Check post", "Rabin", "Shahak"});
         cities[9] = new City("Petah Tiqva", "Sharon", new String[]{"Em Hamoshavot", "Bet Rivka", "Sirqin"});
     }
+
     //סיבוכיות O(1)
     public void createUser() {
         do {
@@ -89,18 +90,19 @@ public class RealEstate {
         addUserToArray(userName, userPassword, phoneNumber, agent, publishCount);
 
     }
+
     //סיבוכיות O(n)
     private void addUserToArray(String userName, String userPassword, String phoneNumber, boolean agent, int publishCount) {
         User userToAdd = new User(userName, userPassword, phoneNumber, agent, publishCount);
-        User [] newUsersArr = new User [this.users.length +1];
+        User[] newUsersArr = new User[this.users.length + 1];
         for (int i = 0; i < this.users.length; i++) {
-            newUsersArr [i] = this.users [i];
+            newUsersArr[i] = this.users[i];
             if (this.users[i] == (null)) {
                 this.users[i] = userToAdd;
                 break;
             }
         }
-        newUsersArr [this.users.length] = userToAdd;
+        newUsersArr[this.users.length] = userToAdd;
     }
 
     //סיבוכיות O(n)
@@ -299,7 +301,7 @@ public class RealEstate {
         int minPrice;
         int maxPrice;
         int filterArrSize = 0;
-        Property [] tempArr = new Property [this.properties.length];
+        Property[] tempArr = new Property[this.properties.length];
         Property filterProperty = new Property("null", "null", 0, 0, "", false, 0, 0, null);
         System.out.println("Here are some questions about the property\n" +
                 "At any point you can press -999 if the question is irrelevant");
@@ -350,34 +352,22 @@ public class RealEstate {
             if (this.properties[i] != null) {
                 if (this.properties[i].getForRent().equals(filterProperty.getForRent()) || forRent.equals(NO_FILTER)) {
 
-                    if (this.properties[i].getRoomNumber().equals(filterProperty.getRoomNumber())
-                            || String.valueOf(filterProperty.getRoomNumber()).equals(NO_FILTER)) {
+                    if (this.properties[i].getType().equals(filterProperty.getType()) || filterProperty.getType().equals("")) {
 
-                        if (this.properties[i].getType().equals(filterProperty.getType()) || filterProperty.getType().equals("")) {
+                        if (this.properties[i].getRoomNumber().equals(filterProperty.getRoomNumber())
+                                || String.valueOf(filterProperty.getRoomNumber()).equals(NO_FILTER)) {
 
-                            if (this.properties[i].getRoomNumber().equals(filterProperty.getRoomNumber())
-                                    || String.valueOf(filterProperty.getRoomNumber()).equals(NO_FILTER)) {
-
-                                if ((String.valueOf(minPrice).equals(NO_FILTER) && (String.valueOf(maxPrice).equals(NO_FILTER))) ||
-                                        (this.properties[i].getPrice() >= minPrice && this.properties[i].getPrice() <= maxPrice)) {
-                                    filterArrSize ++;
-                                }
-
-                                if (String.valueOf(minPrice).equals(NO_FILTER) && !String.valueOf(maxPrice).equals(NO_FILTER)) {
-                                    if (this.properties[i].getPrice() <= maxPrice) {
-                                        filterArrSize ++;
-                                    }
-                                }
-
-                                if (!String.valueOf(minPrice).equals(NO_FILTER) && String.valueOf(maxPrice).equals(NO_FILTER)) {
-                                    if (this.properties[i].getPrice() >= minPrice) {
-                                        filterArrSize ++;
-                                    }
+                            if ((String.valueOf(minPrice).equals(NO_FILTER) && (String.valueOf(maxPrice).equals(NO_FILTER))) ||
+                                    (this.properties[i].getPrice() >= minPrice && this.properties[i].getPrice() <= maxPrice) ||
+                                    String.valueOf(minPrice).equals(NO_FILTER) && !String.valueOf(maxPrice).equals(NO_FILTER) ||
+                                    !String.valueOf(minPrice).equals(NO_FILTER) && String.valueOf(maxPrice).equals(NO_FILTER)) {
+                                if (this.properties[i].getPrice() <= maxPrice || this.properties[i].getPrice() >= minPrice) {
+                                    filterArrSize++;
                                 }
 
                                 for (int j = 0; j < tempArr.length; j++) {
-                                    if (tempArr [j] == null){
-                                        tempArr [j] = this.properties [i];
+                                    if (tempArr[j] == null) {
+                                        tempArr[j] = this.properties[i];
                                         break;
                                     }
                                 }
@@ -388,13 +378,13 @@ public class RealEstate {
             }
         }
 
-        Property[] filterPropertiesArr = new Property[filterArrSize];
-        for (int i = 0; i < filterPropertiesArr.length; i++) {
-            if (filterPropertiesArr [i] == null){
-                filterPropertiesArr [i] = tempArr [i];
+            Property[] filterPropertiesArr = new Property[filterArrSize];
+            for (int i = 0; i < filterPropertiesArr.length; i++) {
+                if (filterPropertiesArr[i] == null) {
+                    filterPropertiesArr[i] = tempArr[i];
+                }
             }
-        }
+            return filterPropertiesArr;
 
-        return filterPropertiesArr;
     }
 }

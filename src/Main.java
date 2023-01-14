@@ -1,6 +1,5 @@
 import java.util.Objects;
 import java.util.Scanner;
-
 public class Main {
     private static final String CREATE_ACCOUNT = "1";
     private static final String CONNECT = "2";

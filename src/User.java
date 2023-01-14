@@ -75,7 +75,7 @@ public class User {
     }
 
 
-    //סיבוכיות O(1)
+    //סיבוכיות O(n)
     protected static boolean checkPhoneNumber(String phoneNumber) {
         boolean goodNumber = false;
         if (phoneNumber.length() != PHONE_NUMBER_LENGHT) {
@@ -103,6 +103,7 @@ public class User {
         return publicationsRemaining;
     }
 
+    // סיבוכיות O(1)
     protected static boolean checkUserAds(User user) {
         boolean propertiesFound;
         if ((user.agent && user.publishCount.equals(5)) || (!user.agent && user.publishCount == 2)) {
@@ -111,6 +112,7 @@ public class User {
         return propertiesFound;
     }
 
+    // סיבוכיות O(1)
     public String toString() {
         if (this.agent) {
             return this.getUserName() + " " + this.phoneNumber + " (Real Estate agent).";

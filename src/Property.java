@@ -87,7 +87,7 @@ public class Property {
         return scanner.nextInt();
     }
 
-    //סיבוכיות O(n)
+    //סיבוכיות O(1)
     public String toString() {
         if (!this.forRent) {
             return this.city + " - " + this.streetName + " " + this.houseNumber + "." + "\n"
